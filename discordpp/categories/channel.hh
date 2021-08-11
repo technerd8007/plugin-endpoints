@@ -226,14 +226,9 @@ sptr<const std::string> render_target() override {
 
 // https://discord.com/developers/docs/resources/channel#create-message
 // UndarkAido/Aido#8614 verified channel_id, content, filename, filetype, file
-// Westlanderz/SenpaiR6#1717/deathwillcome800#0950 verified embed
+// Westlanderz/SenpaiR6#1717 verified embed
+// Deathwillcome800#0950 replaced embed with embeds
 // TODO nonce, tts, allowed_mentions, and message_reference are unverified
-// Example use of embeds:
-// bot->createMessage()
-//    ->channel_id(dpp::get_snowflake(msg["channel_id"]))
-//    ->embeds(<Json File>)
-//    ->run();
-//
 #define Bot PluginEndpoints
 #define Parent FileCall
 #define Class CreateMessageCall
@@ -464,6 +459,7 @@ sptr<const std::string> render_target() override {
 
 // https://discord.com/developers/docs/resources/channel#edit-message
 // Westlanderz/SenpaiR6#1717 verified channel_id, message_id, content, embed and flags
+// Deathwillcome800#0950 replaced embed with embeds
 // TODO allowed_mentions is unverified
 #define Bot PluginEndpoints
 #define Parent JsonCall
