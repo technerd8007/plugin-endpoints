@@ -226,8 +226,14 @@ sptr<const std::string> render_target() override {
 
 // https://discord.com/developers/docs/resources/channel#create-message
 // UndarkAido/Aido#8614 verified channel_id, content, filename, filetype, file
-// Westlanderz/SenpaiR6#1717 verified embed
+// Westlanderz/SenpaiR6#1717/deathwillcome800#0950 verified embed
 // TODO nonce, tts, allowed_mentions, and message_reference are unverified
+// Example use of embeds:
+// bot->createMessage()
+//    ->channel_id(dpp::get_snowflake(msg["channel_id"]))
+//    ->embeds(<Json File>)
+//    ->run();
+//
 #define Bot PluginEndpoints
 #define Parent FileCall
 #define Class CreateMessageCall
@@ -237,7 +243,7 @@ sptr<const std::string> render_target() override {
     NEW_FIELD(std::string, content, USEDBY(payload))                           \
     NEW_FIELD(Nonce, nonce, USEDBY(payload))                                   \
     NEW_FIELD(bool, tts, USEDBY(payload))                                      \
-    NEW_FIELD(json, embed, USEDBY(payload))                                    \
+    NEW_FIELD(std::vector<json>, embeds, USEDBY(payload))                                    \
     NEW_FIELD(json, allowed_mentions, USEDBY(payload))                         \
     NEW_FIELD(json, message_reference, USEDBY(payload))                        \
     FORWARD_FIELD(std::string, filename, )                                     \
@@ -268,8 +274,8 @@ sptr<const json> render_payload() override {
     if (_tts)
         out["tts"] = *_tts;
 
-    if (_embed)
-        out["embed"] = *_embed;
+    if (_embeds)
+        out["embeds"] = *_embeds;
 
     if (_allowed_mentions)
         out["allowed_mentions"] = *_allowed_mentions;
@@ -467,7 +473,7 @@ sptr<const std::string> render_target() override {
     NEW_FIELD(snowflake, channel_id, USEDBY(target))                           \
     NEW_FIELD(snowflake, message_id, USEDBY(target))                           \
     NEW_FIELD(std::string, content, USEDBY(payload))                           \
-    NEW_FIELD(json, embed, USEDBY(payload))                                    \
+    NEW_FIELD(std::vector<json>, embeds, USEDBY(payload))                                    \
     NEW_FIELD(int, flags, USEDBY(payload))                                     \
     NEW_FIELD(json, allowed_mentions, USEDBY(payload))                         \
     STATIC_FIELD(std::string, method, "PATCH")                                 \
@@ -495,8 +501,8 @@ sptr<const json> render_payload() override {
     if (_content)
         out["content"] = *_content;
 
-    if (_embed)
-        out["embed"] = *_embed;
+    if (_embeds)
+        out["embeds"] = *_embeds;
 
     if (_flags)
         out["flags"] = *_flags;
